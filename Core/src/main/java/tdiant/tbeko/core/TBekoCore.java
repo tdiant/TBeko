@@ -5,6 +5,7 @@ import tdiant.tbeko.core.math.Calculator;
 import tdiant.tbeko.core.object.TObject;
 import tdiant.tbeko.core.object.TObjectType;
 import tdiant.tbeko.core.object.TStringObject;
+import tdiant.tbeko.core.statement.InputStatement;
 import tdiant.tbeko.core.statement.PrintStatement;
 
 import java.util.*;
@@ -101,6 +102,7 @@ public class TBekoCore {
                 new PrintStatement(this,arg.trim()).run();
                 return;
             case "INPUT":
+                new InputStatement(this,arg.trim()).run();
                 return;
             case "SET":
                 return;

@@ -26,7 +26,15 @@ public class DefaultInteractBlock implements IInteractBlock {
 
     @Override
     public void outMessage(String message) {
-        System.out.println(message);
+        this.outMessage(message,true);
+    }
+
+    @Override
+    public void outMessage(String message, boolean b) {
+        if(b)
+            System.out.println(message);
+        else
+            System.out.print(message);
     }
 
     @Override
@@ -42,17 +50,17 @@ public class DefaultInteractBlock implements IInteractBlock {
     }
 
     @Override
-    public TStringObject getStringObject() {
+    public TStringObject inStringObject() {
         TObject to = this.inObject();
         return new TStringObject(to.toString());
     }
 
     @Override
-    public TNumberObject getNumberObject() {
+    public TNumberObject inNumberObject() {
         TObject to = this.inObject();
         if(to.getType()== TObjectType.Number)
             return (TNumberObject) to;
         else
-            return getNumberObject();
+            return this.inNumberObject();
     }
 }

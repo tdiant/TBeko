@@ -11,7 +11,8 @@ public interface IInteractBlock {
     public void outWaring(String message,int line,String code);
     public void outError(String message,int line,String code);
     public void outMessage(String message);
+    public void outMessage(String message,boolean b);
     public TObject inObject();
-    public TStringObject getStringObject();
-    public TNumberObject getNumberObject();
+    public TStringObject inStringObject();
+    public TNumberObject inNumberObject();
 }

@@ -8,7 +8,9 @@ import tdiant.tbeko.core.interact.DefaultInteractBlock;
  */
 public class JavaTest {
     public static void main(String[] args) {
-        String str = "PRINT 1+\"ACV\"";
+        String str = "" +
+                "INPUT \"ABC\",S\r\n" +
+                "PRINT S+16";
         DefaultInteractBlock dib = new DefaultInteractBlock();
         TBekoCore tbc = new TBekoCore(str,dib);
         tbc.read();
