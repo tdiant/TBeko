@@ -12,15 +12,15 @@ public class PrintStatement extends Statement {
     }
 
     @Override
-    public void run(){
-        if(this.getArg().length()<=0){
+    public void run() {
+        if (this.getArg().length() <= 0) {
             //报错
             return;
         }
 
-        this.setArg( this.getArg().replace(" ",""));
+        this.setArg(this.getArg().replace(" ", ""));
         String[] args = this.getArg().split(",");
-        for(String argStr : args){
+        for (String argStr : args) {
             /*if(false){ //判断是不是算式
                 //
             }else{
@@ -33,8 +33,8 @@ public class PrintStatement extends Statement {
             String output = this.getTBekoCore().counterString(argStr);
 
             //去除首尾引号
-            if(output.charAt(0)=='\"') output=output.substring(1,output.length());
-            if(output.charAt(output.length()-1)=='\"') output=output.substring(0,output.length()-1);
+            if (output.charAt(0) == '\"') output = output.substring(1, output.length());
+            if (output.charAt(output.length() - 1) == '\"') output = output.substring(0, output.length() - 1);
 
             this.getTBekoCore().getInteractBlock().outMessage(output);
         }

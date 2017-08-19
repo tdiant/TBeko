@@ -9,23 +9,23 @@ public abstract class Statement {
     private TBekoCore tbc;
     private String arg = "";
 
-    public Statement(TBekoCore tbc, String arg){
-        if(arg!=null)
+    public Statement(TBekoCore tbc, String arg) {
+        if (arg != null)
             this.arg = arg;
         this.tbc = tbc;
     }
 
     public abstract void run();
 
-    public String getArg(){
+    public String getArg() {
         return arg;
     }
 
-    public TBekoCore getTBekoCore(){
-        return tbc;
+    public void setArg(String arg) {
+        this.arg = arg;
     }
 
-    public void setArg(String arg){
-        this.arg = arg;
+    public TBekoCore getTBekoCore() {
+        return tbc;
     }
 }

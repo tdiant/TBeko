@@ -8,9 +8,10 @@ import java.math.BigDecimal;
 public class TNumberObject implements TObject {
     private BigDecimal value = new BigDecimal(0);
 
-    public TNumberObject(){}
+    public TNumberObject() {
+    }
 
-    public TNumberObject(double num){
+    public TNumberObject(double num) {
         this.value = new BigDecimal(num);
     }
 
@@ -23,8 +24,18 @@ public class TNumberObject implements TObject {
         return value;
     }
 
-    public double getValue(){
+    public TNumberObject setBigDecimal(BigDecimal bd) {
+        this.value = bd;
+        return this;
+    }
+
+    public double getValue() {
         return value.doubleValue();
+    }
+
+    public TNumberObject setValue(double num) {
+        this.value = new BigDecimal(num);
+        return this;
     }
 
     public TNumberObject setValue(BigDecimal value) {
@@ -32,20 +43,10 @@ public class TNumberObject implements TObject {
         return this;
     }
 
-    public TNumberObject setValue(double num){
-        this.value = new BigDecimal(num);
-        return this;
-    }
-
-    public TNumberObject setBigDecimal(BigDecimal bd){
-        this.value = bd;
-        return this;
-    }
-
     @Override
-    public String toString(){
-        String str =this.value.doubleValue()+"";
-        if(str.contains(".")) str = ((int)this.value.doubleValue())+"";
+    public String toString() {
+        String str = this.value.doubleValue() + "";
+        if (str.contains(".")) str = ((int) this.value.doubleValue()) + "";
         return str;
     }
 }

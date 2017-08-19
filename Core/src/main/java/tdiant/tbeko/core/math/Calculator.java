@@ -9,7 +9,7 @@ import java.util.Stack;
 public class Calculator {
     private Stack<String> postfixStack = new Stack<String>();// 后缀式栈
     private Stack<Character> opStack = new Stack<Character>();// 运算符栈
-    private int[] operatPriority = new int[] { 0, 3, 2, 1, -1, 1, 0, 2 };// 运用运算符ASCII码-40做索引的运算符优先级
+    private int[] operatPriority = new int[]{0, 3, 2, 1, -1, 1, 0, 2};// 运用运算符ASCII码-40做索引的运算符优先级
 
     public static double conversion(String expression) {
         double result = 0;
@@ -26,8 +26,7 @@ public class Calculator {
     /**
      * 将表达式中负数的符号更改
      *
-     * @param expression
-     *            例如-2+-1*(-3E-2)-(-1) 被转为 ~2+~1*(~3E~2)-(~1)
+     * @param expression 例如-2+-1*(-3E-2)-(-1) 被转为 ~2+~1*(~3E~2)-(~1)
      * @return
      */
     private static String transform(String expression) {
@@ -45,19 +44,36 @@ public class Calculator {
                 }
             }
         }
-        if(arr[0]=='~'||arr[1]=='('){
-            arr[0]='-';
-            return "0"+new String(arr);
-        }else{
+        if (arr[0] == '~' || arr[1] == '(') {
+            arr[0] = '-';
+            return "0" + new String(arr);
+        } else {
             return new String(arr);
         }
     }
 
     /**
+     * 判断是否为算术符号
+     *
+     * @param c
+     * @return
+     */
+    public static boolean isOperator(char c) {
+        return c == '+' || c == '-' || c == '*' || c == '/' || c == '\\' || c == '%' || c == '(' || c == ')';
+    }
+
+    public static boolean isHaveOperator(String str) {
+        boolean b = false;
+        for (char c : str.toCharArray())
+            if (isOperator(c))
+                b = true;
+        return b;
+    }
+
+    /**
      * 按照给定的表达式计算
      *
-     * @param expression
-     *            要计算的表达式例如:5+12*(3+5)/7
+     * @param expression 要计算的表达式例如:5+12*(3+5)/7
      * @return
      */
     public double calculate(String expression) {
@@ -128,24 +144,6 @@ public class Calculator {
         while (opStack.peek() != ',') {
             postfixStack.push(String.valueOf(opStack.pop()));// 将操作符栈中的剩余的元素添加到后缀式栈中
         }
-    }
-
-    /**
-     * 判断是否为算术符号
-     *
-     * @param c
-     * @return
-     */
-    public static boolean isOperator(char c) {
-        return c == '+' || c == '-' || c == '*' || c == '/' || c == '\\' || c == '%' || c == '(' || c == ')';
-    }
-
-    public static boolean isHaveOperator(String str){
-        boolean b = false;
-        for(char c : str.toCharArray())
-            if(isOperator(c))
-                b = true;
-        return b;
     }
 
     /**

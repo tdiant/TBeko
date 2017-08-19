@@ -14,24 +14,24 @@ import java.util.regex.Pattern;
 public class DefaultInteractBlock implements IInteractBlock {
     @Override
     public void outWaring(String message, int line, String code) {
-        System.err.println("[WARING] "+message);
-        System.err.println("  at line "+line+" :: "+code);
+        System.err.println("[WARING] " + message);
+        System.err.println("  at line " + line + " :: " + code);
     }
 
     @Override
     public void outError(String message, int line, String code) {
-        System.err.println("[ERROR] "+message);
-        System.err.println("  at line "+line+" :: "+code);
+        System.err.println("[ERROR] " + message);
+        System.err.println("  at line " + line + " :: " + code);
     }
 
     @Override
     public void outMessage(String message) {
-        this.outMessage(message,true);
+        this.outMessage(message, true);
     }
 
     @Override
     public void outMessage(String message, boolean b) {
-        if(b)
+        if (b)
             System.out.println(message);
         else
             System.out.print(message);
@@ -42,9 +42,9 @@ public class DefaultInteractBlock implements IInteractBlock {
         Scanner scanner = new Scanner(System.in);
         String str = scanner.next();
 
-        if(Pattern.compile("[0-9]*").matcher(str).matches()){
+        if (Pattern.compile("[0-9]*").matcher(str).matches()) {
             return new TNumberObject(Double.valueOf(str));
-        }else{
+        } else {
             return new TStringObject(str);
         }
     }
@@ -58,7 +58,7 @@ public class DefaultInteractBlock implements IInteractBlock {
     @Override
     public TNumberObject inNumberObject() {
         TObject to = this.inObject();
-        if(to.getType()== TObjectType.Number)
+        if (to.getType() == TObjectType.Number)
             return (TNumberObject) to;
         else
             return this.inNumberObject();

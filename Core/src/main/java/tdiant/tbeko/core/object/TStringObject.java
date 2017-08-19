@@ -3,12 +3,13 @@ package tdiant.tbeko.core.object;
 /**
  * Created by tdiant on 2017/8/18.
  */
-public class TStringObject implements TObject{
+public class TStringObject implements TObject {
     private String value;
 
-    public TStringObject(){}
+    public TStringObject() {
+    }
 
-    public TStringObject(String value){
+    public TStringObject(String value) {
         this.value = value;
     }
 
@@ -27,7 +28,7 @@ public class TStringObject implements TObject{
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return value.toString();
     }
 }
