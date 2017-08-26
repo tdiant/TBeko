@@ -247,7 +247,7 @@ public class TBekoCore {
     public String getLineCode(int i) {
         if (!this.isStart) return null; //没有开始解析禁止访问行
         String[] srcArray = this.src.split("\n");
-        if (srcArray.length >= i || i < 0) return null;
+        if (srcArray.length < i || i < 0) return null;
         return srcArray[i];
     }
 

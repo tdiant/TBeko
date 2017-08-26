@@ -43,7 +43,6 @@ public class IfFunction extends Statement {
                 boolean isRead = true;
                 for (int i = nowLine + 1; i <= this.getTBekoCore().getMaxLineNum(); i++) {
                     String str = this.getTBekoCore().getLineCode(i);
-
                     //预处理
                     while (str.length() != 0 && str.charAt(0) == ' ') str = str.replaceFirst(" ", ""); //取出头部空格
                     String[] cmd = str.split(" ");

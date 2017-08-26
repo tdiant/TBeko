@@ -14,7 +14,10 @@ public class JavaTest {
                 "PRINT S+16\r\n" +
                 "PRINT B";*/
         String str = "" +
-                "IF S >2 THEN";
+                "IF S >2 THEN\r\n" +
+                "INPUT \"6677::\"; A\r\n" +
+                "PRINT A\r\n" +
+                "END IF\r\n";
         DefaultInteractBlock dib = new DefaultInteractBlock();
         TBekoCore tbc = new TBekoCore(str, dib);
         tbc.putObject("S", new TNumberObject(2));

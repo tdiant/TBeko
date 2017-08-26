@@ -15,6 +15,10 @@ public class TNumberObject implements TObject {
         this.value = new BigDecimal(num);
     }
 
+    public TNumberObject(BigDecimal bd){
+        this.value = bd;
+    }
+
     @Override
     public TObjectType getType() {
         return TObjectType.Number;
@@ -45,8 +49,6 @@ public class TNumberObject implements TObject {
 
     @Override
     public String toString() {
-        String str = this.value.doubleValue() + "";
-        if (str.contains(".")) str = ((int) this.value.doubleValue()) + "";
-        return str;
+        return this.value.toString();
     }
 }

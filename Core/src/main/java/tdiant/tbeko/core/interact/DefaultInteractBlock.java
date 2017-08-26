@@ -5,6 +5,7 @@ import tdiant.tbeko.core.object.TObject;
 import tdiant.tbeko.core.object.TObjectType;
 import tdiant.tbeko.core.object.TStringObject;
 
+import java.math.BigDecimal;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
@@ -43,7 +44,7 @@ public class DefaultInteractBlock implements IInteractBlock {
         String str = scanner.next();
 
         if (Pattern.compile("[0-9]*").matcher(str).matches()) {
-            return new TNumberObject(Double.valueOf(str));
+            return new TNumberObject(new BigDecimal(str));//Double.valueOf(str));
         } else {
             return new TStringObject(str);
         }
