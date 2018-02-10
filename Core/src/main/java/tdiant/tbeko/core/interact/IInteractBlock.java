@@ -1,5 +1,6 @@
 package tdiant.tbeko.core.interact;
 
+import tdiant.tbeko.core.TBekoCore;
 import tdiant.tbeko.core.object.TNumberObject;
 import tdiant.tbeko.core.object.TObject;
 import tdiant.tbeko.core.object.TStringObject;
@@ -11,6 +12,10 @@ public interface IInteractBlock {
     public void outWaring(String message, int line, String code);
 
     public void outError(String message, int line, String code);
+
+    public void outWaring(String message, TBekoCore tbc);
+
+    public void outError(String message, TBekoCore tbc);
 
     public void outMessage(String message);
 

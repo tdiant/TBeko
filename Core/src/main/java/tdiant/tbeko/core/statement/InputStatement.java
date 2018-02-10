@@ -17,6 +17,7 @@ public class InputStatement extends Statement {
     public void run() {
         if (this.getArg().length() <= 0) {
             //报错
+            this.getTBekoCore().getInteractBlock().outWaring("INPUT Statement Does not have any Args to do.",this.getTBekoCore());
             return;
         }
 

@@ -18,7 +18,7 @@ public class PrintStatement extends Statement {
             return;
         }
 
-        this.setArg(this.getArg().replace(" ", ""));
+        this.setArg(this.getArg().replace(" ", "").replace(";",","));
         String[] args = this.getArg().split(",");
         for (String argStr : args) {
             /*if(false){ //判断是不是算式
@@ -36,7 +36,8 @@ public class PrintStatement extends Statement {
             if (output.charAt(0) == '\"') output = output.substring(1, output.length());
             if (output.charAt(output.length() - 1) == '\"') output = output.substring(0, output.length() - 1);
 
-            this.getTBekoCore().getInteractBlock().outMessage(output);
+            this.getTBekoCore().getInteractBlock().outMessage(output,false);
         }
+        this.getTBekoCore().getInteractBlock().outMessage("\r\n",false);
     }
 }

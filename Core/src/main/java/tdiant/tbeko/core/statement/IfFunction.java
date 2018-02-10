@@ -23,7 +23,7 @@ public class IfFunction extends Statement {
     @Override
     public void run() {
         if (this.getArg().toUpperCase().split("THEN").length == 1) { //不是一行式的if
-            String[] argArray = this.getArg().toUpperCase().split("THEN");
+            String[] argArray = this.getArg().split("THEN");
             String pdStr = argArray[0].trim().replace(" ", "");
             //while(pdStr.charAt(0)==' ') pdStr = pdStr.substring(1,pdStr.length());
 
@@ -31,11 +31,13 @@ public class IfFunction extends Statement {
             String[] strArray = this.getRelationArray(pdStr);
             if (strArray.length != 2) {
                 //报错：判断式不正确
+                this.getTBekoCore().getInteractBlock().outError("Wrong Relation Equation",this.getTBekoCore());
                 return;
             }
 
             boolean isRun = false;
-            if (this.getTBekoCore().counterString(strArray[0]).equalsIgnoreCase(this.getTBekoCore().counterString(strArray[1])))
+            //if (this.getTBekoCore().counterString(strArray[0]).equalsIgnoreCase(this.getTBekoCore().counterString(strArray[1])))
+            if (this.isCorrectPrerequisite(this.getTBekoCore().counterString(strArray[0]),this.getTBekoCore().counterString(strArray[1]),ro))
                 isRun = true;
 
             if (isRun) {
@@ -69,6 +71,10 @@ public class IfFunction extends Statement {
                 }
             }else{
                 int nowLine = this.getTBekoCore().getLineNum();
+
+                this.getTBekoCore().moveLineNum( this.getTBekoCore().getLineNum() + 1);
+
+                //定位LineNum至ELSE
                 for (int i = nowLine + 1; i <= this.getTBekoCore().getMaxLineNum(); i++) {
                     String str = this.getTBekoCore().getLineCode(i);
 
@@ -77,7 +83,24 @@ public class IfFunction extends Statement {
                     String[] cmd = str.split(" ");
                     if (cmd.length <= 0) continue; //空语句
 
-                    boolean isRead = false;
+                    if(cmd[0].equalsIgnoreCase("ELSE")){
+                        this.getTBekoCore().moveLineNum(this.getTBekoCore().getLineNum()+1);
+                        break;
+                    }else{
+                        this.getTBekoCore().moveLineNum(this.getTBekoCore().getLineNum()+1);
+                    }
+                }
+
+                nowLine = this.getTBekoCore().getLineNum()-1;
+                for (int i = nowLine + 1; i <= this.getTBekoCore().getMaxLineNum(); i++) {
+                    String str = this.getTBekoCore().getLineCode(i);
+
+                    //预处理
+                    while (str.length() != 0 && str.charAt(0) == ' ') str = str.replaceFirst(" ", ""); //取出头部空格
+                    String[] cmd = str.split(" ");
+                    if (cmd.length <= 0) continue; //空语句
+
+                    //boolean isRead = true;
 
                     //关键语句分析
                     if (cmd[0].equalsIgnoreCase("END")) { //判断END IF
@@ -89,14 +112,12 @@ public class IfFunction extends Statement {
                                 return;
                             }
                         }
-                    } else if (cmd[0].equalsIgnoreCase("ELSE")) { //判断是不是ELSE语句
-                        isRead = true;
                     }
 
-                    if (isRead) {
+//                    if (isRead) {
                         this.getTBekoCore().readLine(str);
                         this.getTBekoCore().moveLineNum(i+1);
-                    }
+  //                  }
                 }
             }
 
@@ -106,7 +127,7 @@ public class IfFunction extends Statement {
         }
     }
 
-    public RelationOperator getRelation(String str) {
+    public static RelationOperator getRelation(String str) {
         if (str.contains("<=")) return RelationOperator.LE;
         if (str.contains(">=")) return RelationOperator.GE;
         //if(str.contains("==")) return RelationOperator.EQ;
@@ -117,13 +138,29 @@ public class IfFunction extends Statement {
         return null;
     }
 
-    public String[] getRelationArray(String str) {
-        if (this.getRelation(str) == RelationOperator.LE) return str.replace("<=", "\n").split("\n");
-        if (this.getRelation(str) == RelationOperator.GE) return str.replace(">=", "\n").split("\n");
-        if (this.getRelation(str) == RelationOperator.NE) return str.replace("!=", "\n").split("\n");
-        if (this.getRelation(str) == RelationOperator.LT) return str.replace("<", "\n").split("\n");
-        if (this.getRelation(str) == RelationOperator.GT) return str.replace(">", "\n").split("\n");
-        if (this.getRelation(str) == RelationOperator.EQ) return str.replace("=", "\n").split("\n");
+    public static String[] getRelationArray(String str) {
+        if (getRelation(str) == RelationOperator.LE) return str.replace("<=", "\n").split("\n");
+        if (getRelation(str) == RelationOperator.GE) return str.replace(">=", "\n").split("\n");
+        if (getRelation(str) == RelationOperator.NE) return str.replace("!=", "\n").split("\n");
+        if (getRelation(str) == RelationOperator.LT) return str.replace("<", "\n").split("\n");
+        if (getRelation(str) == RelationOperator.GT) return str.replace(">", "\n").split("\n");
+        if (getRelation(str) == RelationOperator.EQ) return str.replace("=", "\n").split("\n");
         return null;
+    }
+
+    public static boolean isCorrectPrerequisite(String obj1, String obj2, RelationOperator ro){
+        if(ro == RelationOperator.EQ)
+            if (obj1.equalsIgnoreCase(obj2)) return true; else return false;
+        if(ro == RelationOperator.LT)
+            if (Double.parseDouble(obj1) < Double.parseDouble(obj2)) return true; else return false;
+        if(ro == RelationOperator.GT)
+            if (Double.parseDouble(obj1) > Double.parseDouble(obj2)) return true; else return false;
+        if(ro == RelationOperator.LE)
+            if (Double.parseDouble(obj1) <= Double.parseDouble(obj2)) return true; else return false;
+        if(ro == RelationOperator.GE)
+            if (Double.parseDouble(obj1) >= Double.parseDouble(obj2)) return true; else return false;
+        if(ro == RelationOperator.NE)
+            if (!obj1.equalsIgnoreCase(obj2)) return true; else return false;
+        return false;
     }
 }

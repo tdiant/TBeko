@@ -14,6 +14,10 @@ public class Calculator {
     public static double conversion(String expression) {
         double result = 0;
         Calculator cal = new Calculator();
+        if(expression.replace("0","").replace("1","").replace("2","").replace("3","").replace("4","")
+                .replace("5","").replace("6","").replace("7","").replace("8","").replace("9","").replace(" ","").equals("")){
+            expression += "+0";
+        }
         try {
             expression = transform(expression);
             result = cal.calculate(expression);
@@ -62,11 +66,18 @@ public class Calculator {
         return c == '+' || c == '-' || c == '*' || c == '/' || c == '\\' || c == '%' || c == '(' || c == ')';
     }
 
+    public static boolean isNumber(char c) {
+        return c == '0' || c == '1' || c == '2' || c == '3' || c == '4' || c == '5' || c == '6' || c == '7'|| c == '8' || c == '9';
+    }
+
     public static boolean isHaveOperator(String str) {
         boolean b = false;
         for (char c : str.toCharArray())
             if (isOperator(c))
                 b = true;
+            else
+                if(isNumber(c))
+                    b = true;
         return b;
     }
 

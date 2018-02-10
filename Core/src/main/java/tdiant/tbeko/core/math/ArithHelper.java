@@ -36,7 +36,7 @@ public class ArithHelper {
         return b1.divide(b2).setScale(0, BigDecimal.ROUND_DOWN).doubleValue();
     }
 
-    public static double mod(String v1, String v2) {
+    public static double mod(String v1, String v2) { //取模
         BigDecimal b1 = new BigDecimal(v1), b2 = new BigDecimal(v2);
         return b1.divideAndRemainder(b2)[1].doubleValue();
     }

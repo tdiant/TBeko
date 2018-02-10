@@ -5,9 +5,7 @@ import tdiant.tbeko.core.math.Calculator;
 import tdiant.tbeko.core.object.TObject;
 import tdiant.tbeko.core.object.TObjectType;
 import tdiant.tbeko.core.object.TStringObject;
-import tdiant.tbeko.core.statement.IfFunction;
-import tdiant.tbeko.core.statement.InputStatement;
-import tdiant.tbeko.core.statement.PrintStatement;
+import tdiant.tbeko.core.statement.*;
 
 import java.util.*;
 
@@ -63,7 +61,7 @@ public class TBekoCore {
             if (c == '\"') {
                 if (isStringCatching) {
                     isStringCatching = false;
-                    String oName = "TAUTO_A_" + k;
+                    String oName = "々_" + k;
                     this.putObject(oName, new TStringObject(tempStr.substring(1, tempStr.length())));
                     str = new StringBuilder(str).insert(lastStringCharLoc, oName).toString();
                     lastStringCharLoc = -1;
@@ -98,26 +96,42 @@ public class TBekoCore {
         //处理出来最终的arg
         String arg = str.replaceFirst(cmd[0], "");
         while (arg.length() != 0 && arg.charAt(0) == ' ') arg = arg.replaceFirst(" ", ""); //取出头部空格
+        if(arg.replace(" ","").length()==0) arg=str.replace(" ","");
 
         //匹配语句类型
         switch (cmd[0].toUpperCase()) {
             default:
                 //报错
+                if(arg.contains("=")) {
+                    new SetStatement(this, arg.trim()).run();
+                }
                 return;
             case "PRINT":
+                new PrintStatement(this, arg.trim()).run();
+                return;
+            case "DISP":
                 new PrintStatement(this, arg.trim()).run();
                 return;
             case "INPUT":
                 new InputStatement(this, arg.trim()).run();
                 return;
             case "SET":
+                new SetStatement(this,arg.trim()).run();
                 return;
             case "IF":
                 new IfFunction(this, arg.trim()).run();
                 return;
-            case "DO":
-                return;
             case "WHILE":
+                new WhileStatement(this,arg.trim()).run();
+                return;
+            case "DO":
+                new DoStatement(this,arg.trim()).run();
+                return;
+            case "END":
+                return;
+            case "LOOP":
+                return;
+            case "WEND":
                 return;
         }
     }
@@ -131,6 +145,7 @@ public class TBekoCore {
     }
 
     public String counterString(String str) {
+        str = this.replaceObjectName(str);
         if (this.isMathStatement(str)) { //算式
             if ((this.mathCount(str) + "").equalsIgnoreCase(Double.NaN + "")) {
                 String backStr_1 = this.replaceObjectName(str);
